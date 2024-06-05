@@ -8,6 +8,12 @@ using namespace std;
 double getValue();
 
 /**
+* @brief Проверка на неотрицательное число
+* @param value число 
+*/
+void checkPositive(const double value);
+
+/**
 * @brief точка входа в программу
 * @return 0
 */
@@ -16,14 +22,25 @@ int main() {
 
     cout << "Введите скорость лодки в стоячей воде (км/ч)=";
     double boatSpeed = getValue();
+    checkPositive(boatSpeed);
     cout << "Введите скорость течения реки (км/ч)=";
     double currentSpeed = getValue();
+    checkPositive(currentSpeed);
     cout << "Введите время движения (часы)=";
-    double time = getValue();
+    double totalTime = getValue();
+    checkPositive(totalTime);
     double totalSpeed = boatSpeed + currentSpeed;
-    double distance = totalSpeed * time;
+    double distance = totalSpeed * totalTime;
     cout << endl << "Путь, пройденный лодкой по течению реки: " << distance << " км";
     return 0;
+}
+
+
+void checkPositive(const double value) {     
+    if (value <= 0) {     
+        cout << "value < 0" << endl;
+        abort();
+    }
 }
 
 double getValue() {
