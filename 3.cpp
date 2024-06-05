@@ -23,6 +23,12 @@ bool canPlaceHouses(const double a, const double b, const double p, const double
 double getValue();
 
 /**
+* @brief Проверка на неотрицательное число
+* @param value число 
+*/
+void checkPositive(const double value);
+
+/**
 * @brief Точка входа в программу
 * @return 0
 */
@@ -42,12 +48,23 @@ int main() {
     cout << "Длина 2 дома=";
     sides[5] = getValue();
 
+    for (size_t i = 0; i < 6; i++) {
+        checkPositive(sides[i]);
+    }
+
     if (!canPlaceHouses(sides[0], sides[1], sides[2], sides[3], sides[4], sides[5])) {
         cout << "Дома нельзя разместить на данном участке." << endl;
     } else {
         cout << "Дома можно разместить на данном участке." << endl;
     }
     return 0;
+}
+
+void checkPositive(const double value) {     
+    if (value <= 0) {     
+        cout << "value < 0" << endl;
+        abort();
+    }
 }
 
 double getValue() {
