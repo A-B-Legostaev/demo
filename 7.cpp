@@ -90,6 +90,14 @@ void taskSecond( int **arr, int** new_arr, const int rows, const int columns);
 void taskFisrt( int **arr, const int rows, const int columns);
 
 /**
+* @brief Возвращает новое количество столбцов
+* @param arr указатель на исходный массив
+* @param rows количество строк
+* @param columns количество столбцов
+*/
+int GetNewCols(int** arr,  const int rows, const int columns);
+
+/**
 * @brief точка входа в программу
 * @return 0
 */
@@ -111,7 +119,7 @@ int main() {
 
     if ((xmin > xmax)) {
         cout << "Некорректная размерность!" << endl;
-        abort();
+        return 1;
     }
 
     int** array = getNewArray(n, m);
@@ -125,7 +133,7 @@ int main() {
             break;
         default :
             cout << "нет такого режима" << endl;
-            abort();
+            return 1;
     }
 
     cout << "Массив заполнен: " << endl;
@@ -137,16 +145,7 @@ int main() {
     deleteArray(task1, n);
 
     cout << "2. Вставить после всех столбцов, содержащих нулевой элемент, первый столбец" << endl << "Результат:" << endl;
-    int new_cols = n;
-    for (size_t j = 0; j < m; j++) {
-        for (size_t i = 0; i < n; i++) {
-            if ((i == 0 ) && (j == 0)) continue;
-            if (array[i][j] == array[0][0]) {
-                new_cols++;
-                break;
-            }
-        }
-    }
+    int new_cols = GetNewCols(array, n, m);
     if (new_cols == n) {
         printArray(array, n, new_cols);
     } else {
@@ -158,6 +157,20 @@ int main() {
 
     deleteArray(array, n);
     return 0;
+}
+
+int GetNewCols(int** arr,  const int rows, const int columns) {
+    int new_cols = columns;
+    for (size_t j = 0; j < columns; j++) {
+        for (size_t i = 0; i < rows; i++) {
+            if ((i == 0 ) && (j == 0)) continue;
+            if (arr[i][j] == arr[0][0]) {
+                new_cols++;
+                break;
+            }
+        }
+    }
+    return new_cols;
 }
 
 int** copyArray( int** arr, const int rows, const int columns) {
