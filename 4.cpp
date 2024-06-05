@@ -28,16 +28,12 @@ void checkPositive(const double value);
 * @return 0
 */
 int main() {
-    double x = 0.0;
-    double x_max = 0.0;
-    double plus_x = 0.0;
-
     cout << "х начальный:" << endl;
-    x = getValue();
+    double x = getValue();
     cout << "х максимальный:" << endl;
-    x_max = getValue();
+    double x_max = getValue();
     cout << "Δ:" << endl;
-    plus_x = getValue();
+    double plus_x = getValue();
 
 
     checkPositive(plus_x);
@@ -46,7 +42,7 @@ int main() {
         abort();
     }
     for (double i = x; i < x_max + plus_x; i += plus_x) {
-        if ((1.0- i) < 0.0 || fabs(cos(i) < 1e-10)) {
+        if ((1.0- i) < 0.0 || cos(i) == 0.0) {
             cout <<i<<"=неопределено, (выражение под корнем должно быть больше или равно нулю, а так же тангенс не определен в точках где косинус равен нулю)"<<endl;
         } else {
             cout <<i<<"="<<f(i)<<endl;
