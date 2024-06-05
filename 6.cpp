@@ -75,6 +75,14 @@ void checkPositive(const int value);
 int getValue();
 
 /**
+* @brief Копирует массив
+* @param original_array массив для копирования
+* @param size размерность
+* @return возвращает новый массив
+*/
+int* copyArray(const int* original_array, const int size);
+
+/**
 * @brief точка входа в программу
 * @return 0
 */
@@ -108,7 +116,7 @@ int main() {
         case MANUAL :
             fillArrayManual(array, n, xmin, xmax);
             break;
-        default :
+        default:
             cout << "нет такого режима" << endl;
             return 1;
     }
@@ -117,8 +125,10 @@ int main() {
     printArr(array, n);
     cout << endl << "1. Найти сумму элементов, значения которых состоят из одной цифры" << "\n" << "Результат: " << firstTask(array, n) << endl;
     cout << "2. Заменить элементы массива между минимальным и максимальным на те же элементы в обратном порядке" << "\n" << "Результат: " << endl;
-    secondTask(array, n);
-    printArr(array, n);
+    int* sec_arr = copyArray(array, n);
+    secondTask(sec_arr, n);
+    printArr(sec_arr, n);
+    delete[] sec_arr;
     cout << "3. Найти номер последней пары соседних элементов с одинаковыми знаками, произведение которых меньше заданного числа" << "\n" << "Результат: ";
     int res = threeTask(array, n, number);
     if (res != -1) {
@@ -128,6 +138,15 @@ int main() {
     }
     delete[] array;
     return 0;
+}
+
+int* copyArray(const int* original_array, const int size) {
+    int* new_arr = new int[size]();
+
+    for (size_t i = 0; i < size; i++) {
+        new_arr[i] = original_array[i];
+    }
+    return new_arr;
 }
 
 int getValue() {
@@ -182,11 +201,29 @@ int firstTask(const int* arr, const int size) {
 }
 
 void secondTask(int* arr, const int size) {
-    int *max_elem = std::max_element(arr, arr + size);
-    int *min_elem = std::min_element(arr, arr + size);
-    int t = *max_elem;
-    *max_elem = *min_elem;
-    *min_elem = t;
+    int index_min = 0;
+    int index_max = 0;
+    for (size_t i = 0; i < size; i++) {
+        if (arr[i] < arr[index_min]) {
+            index_min = i;
+        }
+        if (arr[i] > arr[index_max]) {
+            index_max = i;
+        }
+    }
+    if (index_max - index_min > 0) {
+        for (size_t i = index_min, j = index_max; i > j; i--, j++) {
+            int tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+        }
+    } else if (index_max - index_min < 0) {
+        for (size_t i = index_max, j = index_min; i < j; i++, j--) {
+            int tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+        }
+    }
 }
 
 int threeTask(const int* arr, const int size, const int number) {
@@ -200,4 +237,3 @@ int threeTask(const int* arr, const int size, const int number) {
     }
     return id_pair;
 }
-
