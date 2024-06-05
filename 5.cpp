@@ -97,14 +97,11 @@ double more_e_sum(const double e) {
     double ress = 0.0;
     double current = 1.0;
     int i = 0;
-    while (true) { 
+    do { 
         ress += current;
 	    current = recurrent(current, i);
-        if (fabs(current) < e) {
-            break;
-        }
         ++i;
-    }
+    } while (fabs(current) >= e);
     return ress;
 }
 
