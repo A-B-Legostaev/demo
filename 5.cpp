@@ -84,8 +84,8 @@ int getValueInt() {
 double common_sum(const int k) {
     double res = 0.0;
     double current = 1.0;
-    for (int i = 0; i < k; ++i) {
-        cout<<"<"<<i<< "> " <<current<<" sum="<< res;
+    for (int i = 0; i <= k; ++i) {
+        cout<<"<"<<i<< "> " <<current<<" sum="<< res << endl;
         res += current;
         current = recurrent(current, i);
     }
